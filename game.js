@@ -9,9 +9,12 @@
 		preload : function(){
 			this.game.load.spritesheet('ship','assets/Spritesheet_64x29.png',64,29,4);
 			this.game.load.image('bullet','assets/bullet.png');
+			this.game.load.image('bgSpace','assets/farback.jpg')
 		},
 
 		create : function(){
+			this.bg = this.game.add.sprite(0,0,'bgSpace');
+
 			this.ship = this.game.add.sprite(10,HEIGHT/2, 'ship');
 			this.ship.animations.add('move');
 			this.ship.animations.play('move', 20, true);
@@ -21,7 +24,6 @@
 			this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
 			this.lastBullet = 0;
-
 			this.speed = 2;
 		},
 
