@@ -13,7 +13,8 @@
 		},
 
 		create : function(){
-			this.bg = this.game.add.sprite(0,0,'bgSpace');
+			this.bg = this.game.add.tileSprite(0,0,1782,600,'bgSpace');
+			this.bg.autoScroll(-100,0);
 
 			this.ship = this.game.add.sprite(10,HEIGHT/2, 'ship');
 			this.ship.animations.add('move');
@@ -60,6 +61,8 @@
 					this.lastBullet = curTime;
 				}
 			}
+
+			//this.bg.x -= 100;
 		}
 	}
 
