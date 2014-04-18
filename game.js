@@ -44,10 +44,13 @@
     		this.bullets.setAll('outOfBoundsKill', true);
     		this.bullets.setAll('checkWorldBounds', true);
 
-
 			this.enemies = this.game.add.group();
 			this.enemies.enableBody = true;
 			this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+
+			var style = { font: "28px Arial", fill: "#DE5F3D", align: "left" };
+			this.scoreText = this.game.add.text(0,0,"Score : "+this.score,style);
+			this.livesText = this.game.add.text(0,28,"Lives : "+this.lives,style);
 		},
 
 		update : function(){
@@ -133,7 +136,9 @@
 				this.enemies.remove(enemy);
 			enemy.kill();
 			this.lives -= 1;
-			console.log("Lives Remaining : " + this.lives);
+			this.livesText.setText("Lives : "+this.lives);
+			if(this.lives < 0)
+				this.game.state.start('menu');
 		},
 
 		enemyHitBullet : function(bullet, enemy){
@@ -142,10 +147,35 @@
 			enemy.kill();
 			bullet.kill();
 			this.score += 10;
-			console.log("Score : " + this.score);
+			this.scoreText.setText("Score : "+this.score);
+		}
+	}
+
+	var menuState = {
+		preload : function(){
+			this.game.load.image('bgSpace','assets/farback.jpg')
+		},
+
+		create : function(){
+			this.speed = 10;
+
+			this.bg = this.game.add.tileSprite(0,0,1782,600,'bgSpace');
+			this.bg.autoScroll(-this.speed,0);
+
+			var style = { font: "48px Arial", fill: "#DE5F3D", align: "center" };
+			this.title = this.game.add.text(250,170,"Space Shooter",style);
+
+			var style2 = { font: "28px Arial", fill: "#DE5F3D", align: "center" };
+			this.help = this.game.add.text(250,230,"Press `Enter` Key to start",style2);
+		},
+
+		update : function(){
+			if(this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER))
+				this.game.state.start('main');
 		}
 	}
 
 	_game.state.add('main', mainState);
-	_game.state.start('main');
+	_game.state.add('menu', menuState);
+	_game.state.start('menu');
 })();
