@@ -8,7 +8,8 @@
 	var mainState = {
 		preload : function(){
 			this.game.load.image('bullet','assets/bullet.png');
-			this.game.load.image('bgSpace','assets/farback.jpg')
+			this.game.load.image('bgSpace','assets/farback.jpg');
+			this.game.load.image('bgSpace2','assets/starfield.png');
 			this.game.load.spritesheet('ship','assets/Spritesheet_64x29.png',64,29,4);
 			this.game.load.spritesheet("enemyship1","assets/eSpritesheet_40x30.png",40, 30, 6);
 			this.game.load.spritesheet("enemyship2","assets/eSpritesheet_40x30_hue1.png",40, 30, 6);
@@ -22,6 +23,9 @@
 			this.lastEnemy = 0;
 			this.lastTick = 0;
 			this.speed = 100;
+			this.bg1Speed = 30;
+			this.bg2Speed =40;
+			this.bg3Speed =50;
 			this.enemySpeed = 200;
 			this.bulletSpeed = 300;
 			this.lives = 3;
@@ -30,7 +34,13 @@
 			this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
 			this.bg = this.game.add.tileSprite(0,0,1782,600,'bgSpace');
-			this.bg.autoScroll(-this.speed,0);
+			this.bg.autoScroll(-this.bg1Speed,0);
+
+			this.bg2 = this.game.add.tileSprite(0,0,800,601,'bgSpace2');
+			this.bg2.autoScroll(-this.bg2Speed,0);
+
+			this.bg3 = this.game.add.tileSprite(0,0,800,601,'bgSpace2');
+			this.bg3.autoScroll(-this.bg3Speed,0);
 
 			this.ship = this.game.add.sprite(10,HEIGHT/2, 'ship');
 			this.ship.animations.add('move');
@@ -96,7 +106,9 @@
 					this.speed *= 1.1;
 					this.enemySpeed *= 1.1;
 					this.bulletSpeed *= 1.1;
-					this.bg.autoScroll(-this.speed, 0);
+					this.bg.autoScroll(-this.bg1Speed, 0);
+					this.bg2.autoScroll(-this.bg2Speed, 0);
+					this.bg3.autoScroll(-this.bg3Speed, 0);
 					this.lastTick = curTime;
 				}
 			}
